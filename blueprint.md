@@ -1,4 +1,3 @@
-
 # Taverna Kolios - Blueprint
 
 ## Overview
@@ -14,7 +13,4 @@ A simple and intuitive interface for Taverna Kolios, a restaurant by the beach. 
 
 ## Current Plan
 
-- Create the basic structure of the Home page.
-- Add a title and a 2-column grid of 6 buttons with different background colors.
-- Style the buttons with rounded corners, shadows, and white text.
-- Integrate the Home page into the main `App.jsx` component.
+- **Resolve Git Authentication Issue**: The user is the owner of the repository but is unable to push changes. The current plan is to authenticate the local Git environment with the correct GitHub account.
