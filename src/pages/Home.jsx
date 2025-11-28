@@ -1,14 +1,23 @@
+
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const buttons = [
-    { text: "Book a Table", color: "bg-sky-500", emoji: "🍽️" },
+    { text: "Book a Table", color: "bg-sky-500", emoji: "🍽️", path: "/book-table" },
     { text: "Order by the Beach", color: "bg-teal-600", emoji: "🍸" },
     { text: "Special Offers", color: "bg-orange-500", emoji: "🔥" },
-    { text: "Book an Umbrella", color: "bg-gray-200 text-gray-800", emoji: "🏖️" },
+    { text: "Book an Umbrella", color: "bg-gray-200 text-gray-800", emoji: "🏖️", path: "/book-umbrella" },
     { text: "Book a Massage", color: "bg-purple-600", emoji: "🌿" },
     { text: "Daily Events", color: "bg-lime-500 text-gray-900", emoji: "📅" },
   ];
+
+  const handleButtonClick = (path) => {
+    if (path) {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col">
@@ -23,6 +32,7 @@ const Home = () => {
     <div
       key={i}
       className={`${btn.color} rounded-3xl shadow-lg flex flex-col items-center justify-center h-[200px] text-white text-center text-lg font-semibold transform hover:scale-105 hover:brightness-110 transition-all duration-300`}
+      onClick={() => handleButtonClick(btn.path)}
     >
       <span className="text-4xl mb-3">{btn.emoji}</span>
       {btn.text}
