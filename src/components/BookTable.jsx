@@ -1,6 +1,5 @@
 
 import React, { useState } from "react";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
 
 const BookTable = () => {
   const [name, setName] = useState("");
@@ -11,15 +10,47 @@ const BookTable = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const db = getFirestore();
+
+    const formData = {
+      name,
+      phone,
+      date,
+      time,
+      guests,
+    };
+
+    const APPLICATION_ID = "C5F0A9F6-ED0C-4BE7-BB73-BEDB735DCC02";
+    const REST_API_KEY = "F0EE4734-FB2F-42C4-ACA7-12D6A50D1F03";
+    const TABLE_NAME = "TableReservation";
+
+    const reservationDateTime = new Date(`${formData.date}T${formData.time}`).toISOString();
+
+    const dataToSave = {
+      customerName: formData.name,
+      contactPhoneNumber: formData.phone,
+      numberOfGuests: parseInt(formData.guests, 10),
+      reservationDateTime,
+      bookingStatus: 'Pending',
+    };
+
     try {
-      await addDoc(collection(db, "reservations"), {
-        name,
-        phone,
-        date,
-        time,
-        guests,
-      });
+      const response = await fetch(
+        `https://api.backendless.com/${APPLICATION_ID}/${REST_API_KEY}/data/${TABLE_NAME}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(dataToSave),
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(`Network response was not ok: ${errorData.message}`);
+      }
+
+      await response.json();
       alert("Reservation saved!");
       setName("");
       setPhone("");
